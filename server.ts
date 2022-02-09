@@ -9,11 +9,11 @@ app.get("/", function (_, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.get("/backend", (_, res) => {
+app.get("/shorten_url", (_, res) => {
+  // check origin 
+  // check 
   res.send("Hello from server");
 });
-
-
 
 
 app.listen(PORT, () => {
