@@ -1,30 +1,49 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import { BACKEND_API_URL } from "./lib/constants";
+import { validateUrl } from "./lib/validateUrl";
 import "./App.css";
-import Joi from "joi";
 
 function App() {
-  const [url, setURL] = useState("");
   const [query, setQuery] = useState("");
-  const [hasError, setError] = useState(null);
+  const [url, setURL] = useState("");
+  const [hasError, setError] = useState(false);
 
-  const handleShortening = () => {
-    const [{ error, value }] = validateUrl(url);
+  const handleShortening = async () => {
+    setError(false);
+
+    const { error, value } = await validateUrl(query);
     if (error) {
-      setError(true);
+      setURL("");
+      return setError(true);
     }
-
-    setQuery(value);
+    // setURL(value);
+    await fetch(BACKEND_API_URL, {
+      method: "GET",
+      mode: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(value),
+    })
+      .then(async (response) => {
+        let result = await response.json();
+        console.log(result);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
     <>
-      {hasError ?? (
+      {hasError && (
         <div>There was a problem shortening your URL. Please try again.</div>
       )}
-      <input type="text" value={url} onChange={(e) => setURL(e.target.value)} />
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
       <button onClick={() => handleShortening()}>Shorten</button>
-      <p>{query}</p>
+      <p>{url}</p>
     </>
   );
 }
@@ -32,11 +51,3 @@ function App() {
 export default App;
 
 function useShortenUrlAPI() {}
-
-function validateUrl(url: string) {
-  const schema = Joi.string().domain({
-    tlds: { allow: ["com", "dev", "co", "org"] },
-  });
-  const { value, error } = schema.validate(url);
-  return [{ value, error }];
-}
