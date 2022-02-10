@@ -1,28 +1,43 @@
-import Joi from "joi";
+import Joi, { ValidationError } from "joi";
+import AES from "crypto-js/aes";
 
-export function joiValidateUrl(url: string) {
+/**
+ * 
+ * @param domain 
+ * @returns Object<{ value: string , error: Joi.ValidationError | undefined }>
+  *  - validates domain against pre-set allowed tlds
+ */
+export function joiValidateUrl(domain: string): { value: string, error: ValidationError | undefined } {
 	const schema = Joi.string().domain({
 		tlds: { allow: ["com", "dev", "co", "org"] },
 	});
 
-	const { value, error } = schema.validate(url);
+	const { value, error } = schema.validate(domain);
 	return { value, error };
 }
 
+
 export async function validateUrl(url: string) {
-	let myUrl = await toTry(new URL(url));
-	if (myUrl.error) {
+	// check if url meets rfc:1738 standard format
+	// https://datatracker.ietf.org/doc/html/rfc1738 
+	let myUrl;
+	try {
+		myUrl = new URL(url);
+	} catch (error) {
+		console.log("first checkpoint", error);
 		return {
-			error: myUrl.error,
-			value: myUrl.value
+			error: error,
+			value: undefined
 		}
 	}
 
-	let host = myUrl.value.host;
-	let pathname = myUrl.value.pathname;
+	// check if domain is valid
+	let host = myUrl.host;
+	let pathname = myUrl.pathname;
 
 	let { value, error } = joiValidateUrl(host)
 	if (error) {
+		console.log("second checkpoint", error)
 		return { error, value }
 	}
 
@@ -30,12 +45,12 @@ export async function validateUrl(url: string) {
 
 }
 
-function toTry(action: any): Promise<{ value: any | null, error: any | null }> {
-	return new Promise((resolve, reject) => {
-		try {
-			resolve({ value: action(), error: null })
-		} catch (error) {
-			reject({ value: null, error })
-		}
-	})
-}
+/**
+ * 
+ * @param url 
+ * @returns shortened url
+ */
+export async function generateShortUrl(url: string): Promise<string> {
+	const encryptedUrl = AES.encrypt(url, "secret");
+	return `kune.ly/${encryptedUrl}`
+} 
