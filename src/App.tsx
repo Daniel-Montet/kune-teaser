@@ -4,30 +4,29 @@ import { validateUrl } from "./lib/validateUrl";
 import "./App.css";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [url, setURL] = useState("");
+  const [url, setUrl] = useState("");
   const [hasError, setError] = useState(false);
 
   const handleShortening = async () => {
     setError(false);
 
-    const { error, value } = await validateUrl(query);
+    const { error } = await validateUrl(url);
     if (error) {
-      setURL("");
       return setError(true);
     }
-    // setURL(value);
+
+    // url valid at this point
     await fetch(BACKEND_API_URL, {
-      method: "GET",
+      method: "POST",
       mode: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(value),
+      body: JSON.stringify({ url: url }),
     })
       .then(async (response) => {
         let result = await response.json();
-        console.log(result);
+        console.log("result", result);
       })
       .catch((error) => console.log(error));
   };
@@ -37,11 +36,7 @@ function App() {
       {hasError && (
         <div>There was a problem shortening your URL. Please try again.</div>
       )}
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
       <button onClick={() => handleShortening()}>Shorten</button>
       <p>{url}</p>
     </>
@@ -50,4 +45,4 @@ function App() {
 
 export default App;
 
-function useShortenUrlAPI() {}
+// function useShortenUrlAPI() {}
