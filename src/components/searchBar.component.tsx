@@ -29,7 +29,7 @@ const SearchBar: React.FunctionComponent<AppProps> = ({ setUrl }) => {
         onSubmit={(e) => handleSubmit(e)}
       >
         <input
-          className="max-w-3/4 min-w-3/4"
+          className="max-w-3/4 min-w-3/4 border-2	"
           type="text"
           onChange={(e) => handleChange(e)}
         />
