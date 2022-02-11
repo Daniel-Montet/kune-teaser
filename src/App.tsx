@@ -5,10 +5,13 @@ import "./App.css";
 import SearchBar from "./components/searchBar.component";
 import Layout from "./components/layout.component";
 import Table from "./components/table.component";
+// import CryptoJS from "crypto-js";
+import crypto from "crypto";
 
 function App() {
   const [url, setUrl] = useState("");
   const [hasError, setError] = useState(false);
+  console.log(crypto.randomBytes(5));
 
   const handleShortening = async () => {
     setError(false);
@@ -37,14 +40,15 @@ function App() {
   return (
     <Layout header={<SearchBar url={url} setUrl={setUrl} />} main={<Table />} />
   );
-  {
-    /* {hasError && (
-      <div>There was a problem shortening your URL. Please try again.</div>
-    )}
-    <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
-    <button onClick={() => handleShortening()}>Shorten</button>
-    <p>{url}</p> */
-  }
 }
 
 export default App;
+
+{
+  /* {hasError && (
+    <div>There was a problem shortening your URL. Please try again.</div>
+  )}
+  <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
+  <button onClick={() => handleShortening()}>Shorten</button>
+  <p>{url}</p> */
+}

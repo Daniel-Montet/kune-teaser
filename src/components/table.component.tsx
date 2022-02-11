@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 const Table: React.FunctionComponent = () => {
-  const [storedUrls, setStore] = useState<any>(localStorage.getItem("urls"));
+  const [storedUrls, setStore] = useState<any>([]);
   let body;
-  if (storedUrls) {
+  if (storedUrls.length < 1) {
     body = (
       <tr>
         <td>you have no saved short Urls</td>
