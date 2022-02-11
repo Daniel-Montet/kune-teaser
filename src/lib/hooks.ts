@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { validateUrl } from "./validateUrl";
 
-const useShortUrlsApi = (endpoint: string): [state: {
-	data: {
-		originalUrl: string,
-		shortUrl: string
-	}, isLoading: boolean, isError: boolean
-}, setUrl: Function] => {
+const useShortUrlsApi = (endpoint: string): [
+	state: {
+		data: {
+			originalUrl: string,
+			shortUrl: string
+		}, isLoading: boolean, isError: boolean
+	},
+	setUrl: Function
+] => {
 	const [url, setUrl] = useState("");
 	const [data, setData] = useState({ originalUrl: '', shortUrl: '' });
 	const [isLoading, setIsLoading] = useState(false);
@@ -15,9 +18,8 @@ const useShortUrlsApi = (endpoint: string): [state: {
 
 	useEffect(() => {
 		const dofetch = async () => {
-			console.log("called doFetch", url)
-			const { error } = await validateUrl(url);
-			if (error) {
+			const isValid = await validateUrl(url);
+			if (!isValid) {
 				setIsError(true);
 			}
 
@@ -31,9 +33,10 @@ const useShortUrlsApi = (endpoint: string): [state: {
 				body: JSON.stringify({ url: url }),
 			})
 				.then(async (response) => {
+					let result: { url: string | null, error: string | null } = await response.json()
 					setIsLoading(true);
 					setIsError(false);
-					setData({ originalUrl: url, shortUrl: await response.json() });
+					setData({ originalUrl: url, shortUrl: result.url! });
 				})
 				.catch((error) => {
 					setIsLoading(false);
@@ -41,6 +44,7 @@ const useShortUrlsApi = (endpoint: string): [state: {
 					setIsError(true);
 					console.log(error);
 				});
+			// console.log("called doFetch", url)
 		}
 
 		// useEffect runs during componentDidMount and will call dofetch and cause a bug,

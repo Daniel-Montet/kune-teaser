@@ -15,8 +15,8 @@ const Table: React.FunctionComponent<AppProps> = ({ store }) => {
       </tr>
     );
   } else {
-    body = result.map!((item) => (
-      <tr>
+    body = result.map!((item, index) => (
+      <tr key={index}>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           {item.originalUrl}
         </td>

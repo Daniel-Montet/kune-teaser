@@ -1,23 +1,16 @@
 import Joi, { ValidationError } from "joi";
-import crypto from "crypto"
+import validator from "validator";
+// import crypto from "crypto"
 
-/**
- * 
- * @param domain 
- * @returns Object<{ value: string , error: Joi.ValidationError | undefined }>
-  *  - validates domain against pre-set allowed tlds
- */
-export function joiValidateUrl(domain: string): { value: string, error: ValidationError | undefined } {
-	const schema = Joi.string().domain({
-		tlds: { allow: ["com", "dev", "co", "org"] },
-	});
 
-	const { value, error } = schema.validate(domain);
-	return { value, error };
+export function validateUrl(url: string): boolean {
+	return validator.isURL(url);
 }
 
 
-export async function validateUrl(url: string) {
+
+
+export async function customValidateUrl(url: string) {
 	// check if url meets rfc:1738 standard format
 	// https://datatracker.ietf.org/doc/html/rfc1738 
 	let myUrl;
@@ -45,14 +38,37 @@ export async function validateUrl(url: string) {
 
 }
 
+
+
+
+
+/**
+ * 
+ * @param domain 
+ * @returns Object<{ value: string , error: Joi.ValidationError | undefined }>
+  *  - validates domain against pre-set allowed tlds
+ */
+export function joiValidateUrl(domain: string): { value: string, error: ValidationError | undefined } {
+	const schema = Joi.string().domain({
+		tlds: { allow: true },
+	});
+
+	const { value, error } = schema.validate(domain);
+	return { value, error };
+}
+
+
+
+
+
 /**
  * 
  * @param url 
  * @returns shortened url
  */
 export async function generateShortUrl(url: string): Promise<string> {
-	const encryptedUrl = crypto.randomBytes(5).toString("hex");
-	// const encryptedUrl = random(8);
+	// const encryptedUrl = crypto.randomBytes(8).toString("hex");
+	const encryptedUrl = random(8);
 	return `kune.ly/${encryptedUrl}`
 }
 

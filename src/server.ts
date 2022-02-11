@@ -18,15 +18,13 @@ app.get("/", function (_, res) {
 
 app.post("/shorten_url", bodyParser.json(), async (req, res) => {
   // validate req.body.url
-  console.log(req.body.url)
-  let { value, error } = await validateUrl(req.body.url);
-  console.log("third checkpoint", error);
-  if (error) {
+  let isValid = await validateUrl(req.body.url);
+  if (!isValid) {
     return res.json({ error: "Invalid url", url: null }).status(400);
   }
 
   // shorten the Url e.g google.com ==> kune.ly/<customurl>
-  const kuneUrl = await generateShortUrl(value!);
+  const kuneUrl = await generateShortUrl(req.body.url!);
   return res.json({ url: kuneUrl, error: null }).status(200);
 });
 
