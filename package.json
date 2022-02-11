@@ -5,10 +5,8 @@
   "dependencies": {
     "autoprefixer": "^10.4.2",
     "body-parser": "^1.19.1",
-    "crypto-js": "^4.1.1",
     "helmet": "^5.0.2",
     "joi": "^17.6.0",
-    "nodemon": "^2.0.15",
     "postcss": "^8.4.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
