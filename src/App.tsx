@@ -8,7 +8,7 @@ import useShortUrlsApi from "./lib/hooks";
 import Store from "./lib/store";
 
 function App() {
-  const [{ data, isError, isLoading }, setUrl] =
+  const [{ data, isError, isLoading }, { setUrl, setData }] =
     useShortUrlsApi(BACKEND_API_URL);
   const [store] = useState(new Store());
 
@@ -16,6 +16,9 @@ function App() {
   console.log("data", data);
   if (data.shortUrl) {
     store.addUrl(data.originalUrl, data.shortUrl);
+    // reset data state properties. Causes bug if not reset when
+    // a user clicks on the shorten url button.
+    setData({ originalUrl: "", shortUrl: null });
   }
   console.log("error", isError);
 

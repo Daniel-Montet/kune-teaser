@@ -69,7 +69,7 @@ export function joiValidateUrl(domain: string): { value: string, error: Validati
 export async function generateShortUrl(url: string): Promise<string> {
 	// const encryptedUrl = crypto.randomBytes(8).toString("hex");
 	const encryptedUrl = random(8);
-	return `kune.ly/${encryptedUrl}`
+	return `https://kune.ly/${encryptedUrl}`
 }
 
 const random = (length = 8) => {

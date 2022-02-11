@@ -8,8 +8,10 @@ const useShortUrlsApi = (endpoint: string): [
 			shortUrl: string
 		}, isLoading: boolean, isError: boolean
 	},
-	setUrl: Function
-] => {
+	callbacks: {
+		setUrl: Function,
+		setData: Function
+	}] => {
 	const [url, setUrl] = useState("");
 	const [data, setData] = useState({ originalUrl: '', shortUrl: '' });
 	const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +25,7 @@ const useShortUrlsApi = (endpoint: string): [
 				setIsError(true);
 			}
 
+			console.log("called doFetch", url)
 			// url signature valid ,it's safe to fetch now at this point
 			await fetch(endpoint, {
 				method: "POST",
@@ -44,7 +47,6 @@ const useShortUrlsApi = (endpoint: string): [
 					setIsError(true);
 					console.log(error);
 				});
-			// console.log("called doFetch", url)
 		}
 
 		// useEffect runs during componentDidMount and will call dofetch and cause a bug,
@@ -53,7 +55,7 @@ const useShortUrlsApi = (endpoint: string): [
 			dofetch()
 		}
 	}, [url])
-	return [{ data, isLoading, isError }, setUrl];
+	return [{ data, isLoading, isError }, { setUrl, setData }];
 };
 
 export default useShortUrlsApi
