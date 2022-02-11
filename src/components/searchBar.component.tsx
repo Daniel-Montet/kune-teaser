@@ -1,13 +1,19 @@
 import { AppProps } from "../lib/props.types";
+import useShortUrlsApi from "../lib/hooks";
+import { BACKEND_API_URL } from "../lib/constants";
+import { useState } from "react";
 
-const SearchBar: React.FunctionComponent<AppProps> = ({ url, setUrl }) => {
+const SearchBar: React.FunctionComponent<AppProps> = ({ setUrl }) => {
+  const [query, setQuery] = useState("");
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // fetch from API
+    setUrl(query);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.target.value);
+    setQuery(event.target.value);
   };
 
   return (

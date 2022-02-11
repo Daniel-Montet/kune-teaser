@@ -19,7 +19,8 @@
     "isolatedModules": true,
     "outDir": "dist",
     "jsx": "react-jsx",
-    "noEmit": false
+    "noEmit": false,
+    "downlevelIteration": true
   },
   "include": [
     "src/server.ts",

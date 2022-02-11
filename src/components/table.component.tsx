@@ -1,16 +1,21 @@
 import { useState } from "react";
+import { AppProps } from "../lib/props.types";
 
-const Table: React.FunctionComponent = () => {
-  const [storedUrls, setStore] = useState<any>([]);
+const Table: React.FunctionComponent<AppProps> = ({ store }) => {
+  let result = store.findAllUrls();
   let body;
-  if (storedUrls.length < 1) {
+  if (!result) {
     body = (
       <tr>
-        <td>you have no saved short Urls</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+          No shortened urls at the moment
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
       </tr>
     );
   } else {
-    body = storedUrls.map((item) => (
+    body = result.map!((item) => (
       <tr>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           {item.originalUrl}
@@ -24,6 +29,7 @@ const Table: React.FunctionComponent = () => {
       </tr>
     ));
   }
+
   return (
     <section className="max-w-3/4 min-w-3/4">
       <span className="text-current text-lg">Recent URLs</span>
