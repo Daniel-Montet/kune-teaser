@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { BACKEND_API_URL } from "./lib/constants";
 import { validateUrl } from "./lib/validateUrl";
 import "./App.css";
+import SearchBar from "./components/searchBar.component";
+import Layout from "./components/layout.component";
+import Table from "./components/table.component";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -32,15 +35,16 @@ function App() {
   };
 
   return (
-    <>
-      {hasError && (
-        <div>There was a problem shortening your URL. Please try again.</div>
-      )}
-      <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
-      <button onClick={() => handleShortening()}>Shorten</button>
-      <p>{url}</p>
-    </>
+    <Layout header={<SearchBar url={url} setUrl={setUrl} />} main={<Table />} />
   );
+  {
+    /* {hasError && (
+      <div>There was a problem shortening your URL. Please try again.</div>
+    )}
+    <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
+    <button onClick={() => handleShortening()}>Shorten</button>
+    <p>{url}</p> */
+  }
 }
 
 export default App;

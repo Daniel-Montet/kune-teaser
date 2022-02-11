@@ -1,5 +1,7 @@
 import Joi, { ValidationError } from "joi";
-import crypto from "crypto";
+import AES from "crypto-js/aes";
+// import crypto from "crypto"
+
 /**
  * 
  * @param domain 
@@ -50,6 +52,7 @@ export async function validateUrl(url: string) {
  * @returns shortened url
  */
 export async function generateShortUrl(url: string): Promise<string> {
-	const encryptedUrl = crypto.randomBytes(5).toString('hex');
-	return `https://kune.ly/${encryptedUrl}`;
+	// const nativeUseCase = crypto.randombytes(5).toString("hex");
+	const encryptedUrl = AES.encrypt(url, "secret");
+	return `kune.ly/${encryptedUrl}`
 } 

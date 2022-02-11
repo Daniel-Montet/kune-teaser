@@ -5,6 +5,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.2",
     "body-parser": "^1.19.1",
+    "crypto-js": "^4.1.1",
     "helmet": "^5.0.2",
     "joi": "^17.6.0",
     "postcss": "^8.4.6",
