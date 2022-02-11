@@ -15,7 +15,7 @@ const useShortUrlsApi = (endpoint: string): [state: {
 
 	useEffect(() => {
 		const dofetch = async () => {
-			console.log("called", url)
+			console.log("called doFetch", url)
 			const { error } = await validateUrl(url);
 			if (error) {
 				setIsError(true);

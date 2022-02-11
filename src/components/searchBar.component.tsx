@@ -5,11 +5,16 @@ import { useState } from "react";
 
 const SearchBar: React.FunctionComponent<AppProps> = ({ setUrl }) => {
   const [query, setQuery] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // fetch from API
-    setUrl(query);
+    if (!query) {
+      return setIsEmpty(true);
+    }
+    setIsEmpty(false);
+    return setUrl(query);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
