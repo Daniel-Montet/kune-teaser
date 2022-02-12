@@ -33,5 +33,9 @@ yarn start
 ```
 ### NOTE
 - The project is setup as a monolith since its simpler than having client-server model with the time allocated.
+- The shortened urls do not resolve to the original urls yet. Added as a TO DO
 - Both server and client are served from the same host and port
 - Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### TO DO
+- Serve shortened urls that actually resolve to the orginal urls
