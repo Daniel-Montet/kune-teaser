@@ -33,12 +33,16 @@ const SearchBar: React.FunctionComponent<AppProps> = ({
 
   return (
     <div className="col-start-2 col-end-12 flex flex-col gap-y-4 text-center justify-center items-center w-full">
-      <span className="text-gray-900 text-lg w-full">Simplify your URL</span>
+      <span className="text-gray-600 font-bold text-lg w-full">
+        Simplify your URL
+      </span>
       <form className="flex w-full" onSubmit={(e) => handleSubmit(e)}>
         <input
           className={`${
-            isError ? "border-red-400" : "border-gray-300"
-          } max-w-3/4 min-w-3/4 border-2 outline-sky-500 border-r-0	 text-sm	p-3`}
+            isError
+              ? "border-red-400 outline-red-500 hover:border-red-500"
+              : "border-gray-300 outline-sky-500 hover:border-sky-500"
+          } max-w-3/4 min-w-3/4 border-2  border-r-0  rounded-l	 text-sm	p-3`}
           type="text"
           onChange={(e) => handleChange(e)}
           placeholder={
@@ -47,7 +51,7 @@ const SearchBar: React.FunctionComponent<AppProps> = ({
               : undefined
           }
         />
-        <button className="max-w-1/4 min-w-1/4 text-white text-sm font-bold p-3 bg-sky-600">
+        <button className="max-w-1/4 min-w-1/4 text-white text-sm font-bold p-3 bg-sky-600 rounded-r">
           Shorten Url
         </button>
       </form>
