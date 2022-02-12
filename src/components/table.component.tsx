@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppProps } from "../lib/props.types";
 
-const Table: React.FunctionComponent<AppProps> = ({ store }) => {
+const Table: React.FunctionComponent<AppProps> = ({
+  store,
+  isTyping,
+  setIsTyping,
+}) => {
   let result = store.findAllUrls();
   let body;
   if (!result) {
@@ -17,38 +21,41 @@ const Table: React.FunctionComponent<AppProps> = ({ store }) => {
   } else {
     body = result.map!((item, index) => (
       <tr key={index}>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
           {item.originalUrl}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
           {item.shortUrl}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          Copy
+          <DoCopy
+            isTyping={isTyping}
+            setIsTyping={setIsTyping}
+            shortUrl={item.shortUrl}
+          />
         </td>
       </tr>
     ));
   }
 
   return (
-    <section className="max-w-3/4 min-w-3/4">
-      <span className="text-current text-lg">Recent URLs</span>
+    <section className="w-full col-start-2 col-end-12 ">
       <div className="flex flex-col w-full">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-200">
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider"
                     >
                       Original Url
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider"
                     >
                       Short Url
                     </th>
@@ -67,6 +74,36 @@ const Table: React.FunctionComponent<AppProps> = ({ store }) => {
         </div>
       </div>
     </section>
+  );
+};
+
+const DoCopy: React.FunctionComponent<AppProps> = ({
+  isTyping,
+  setIsTyping,
+  shortUrl,
+}) => {
+  const [isCopied, setIsCopied] = useState(false);
+  const handleCopy = () => {
+    setIsCopied(true);
+    setIsTyping(false);
+    // copy shortUrl to keyboard
+    navigator.clipboard.writeText(shortUrl);
+  };
+
+  useEffect(() => {
+    if (isTyping) {
+      setIsCopied(false);
+    }
+  }, [isTyping]);
+
+  return (
+    <div onClick={() => handleCopy()}>
+      {isCopied ? (
+        <span className="text-sm text-sky-500 animate-pulse">Copied</span>
+      ) : (
+        <span className="text-sm">Copy</span>
+      )}
+    </div>
   );
 };
 

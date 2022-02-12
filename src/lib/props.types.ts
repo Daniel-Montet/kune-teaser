@@ -8,5 +8,10 @@ export type AppProps = {
 	main?: JSX.Element;
 	store?: IStore;
 	isLoading?: boolean,
-	isError?: boolean
-};
+	isError?: boolean,
+	query?: string,
+	isTyping?: boolean,
+	setIsTyping?: Function,
+	shortUrl?: string,
+	setIsError?: Function
+}

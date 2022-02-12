@@ -10,7 +10,8 @@ const useShortUrlsApi = (endpoint: string): [
 	},
 	callbacks: {
 		setUrl: Function,
-		setData: Function
+		setData: Function,
+		setIsError: Function
 	}] => {
 	const [url, setUrl] = useState("");
 	const [data, setData] = useState({ originalUrl: '', shortUrl: '' });
@@ -55,7 +56,7 @@ const useShortUrlsApi = (endpoint: string): [
 			dofetch()
 		}
 	}, [url])
-	return [{ data, isLoading, isError }, { setUrl, setData }];
+	return [{ data, isLoading, isError }, { setUrl, setData, setIsError }];
 };
 
 export default useShortUrlsApi
