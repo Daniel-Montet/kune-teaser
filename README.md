@@ -1,17 +1,37 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## Getting Started
 
-### `yarn install`
+Clone this repository:
+```
+git clone https://github.com/Daniel-Montet/kune-teaser.git
+```
+#### then
+```
+cd kune-teaser
+```
+#### then install dependancies
+```bash
+npm install
+```
+#### or
+```
+yarn install
+```
 
-- Command installs required dependancies
+## Running production server
+This command builds the source first then runs the production build.
+#### RUN
+```
+npm run start
+````
+#### or
 
-### `yarn start`
-
-- Due to nature of challenge, the project is setup as a monolith.\
-   This command builds first then runs the build. Both server and client are served from the same host and port\
-  Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+yarn start
+```
+### NOTE
+- The project is setup as a monolith since its simpler than having client-server model with the time allocated.
+- Both server and client are served from the same host and port
+- Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
