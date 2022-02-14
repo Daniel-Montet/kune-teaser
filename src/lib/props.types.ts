@@ -13,5 +13,7 @@ export type AppProps = {
 	isTyping?: boolean,
 	setIsTyping?: Function,
 	shortUrl?: string,
-	setIsError?: Function
+	setIsError?: Function,
+	isStoreUpdated?: boolean,
+	setStoreUpdated?: Function
 }

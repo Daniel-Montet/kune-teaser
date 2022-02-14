@@ -9,7 +9,7 @@ const SearchBar: React.FunctionComponent<AppProps> = ({
 }) => {
   const [query, setQuery] = useState("");
   const [isEmpty, setIsEmpty] = useState(query.length < 1);
-  console.log(isError);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!query) {

@@ -4,10 +4,11 @@ import helmet from "helmet";
 import { PORT } from "./lib/constants";
 import bodyParser from "body-parser";
 import { generateShortUrl, validateUrl } from "./lib/validateUrl";
-
+import cors from "cors";
 const app = express();
 
 // middleware
+app.use(cors())
 app.use(helmet());
 app.use(express.static(path.join(__dirname, "build")));
 

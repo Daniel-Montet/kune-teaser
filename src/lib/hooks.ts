@@ -23,14 +23,13 @@ const useShortUrlsApi = (endpoint: string): [
 		const dofetch = async () => {
 			const isValid = await validateUrl(url);
 			if (!isValid) {
-				setIsError(true);
+				return setIsError(true);
 			}
+			// console.log("called doFetch", url)
 
-			console.log("called doFetch", url)
 			// url signature valid ,it's safe to fetch now at this point
 			await fetch(endpoint, {
 				method: "POST",
-				mode: "same-origin",
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -56,6 +55,7 @@ const useShortUrlsApi = (endpoint: string): [
 			dofetch()
 		}
 	}, [url])
+	// console.log(data, isError)
 	return [{ data, isLoading, isError }, { setUrl, setData, setIsError }];
 };
 

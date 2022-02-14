@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BACKEND_API_URL } from "./lib/constants";
 import "./App.css";
 import SearchBar from "./components/searchBar.component";
@@ -14,14 +14,12 @@ function App() {
   const [store] = useState(new Store());
 
   // Only add to store if data valid
-  console.log("data", data);
-  if (data.shortUrl) {
-    store.addUrl(data.originalUrl, data.shortUrl);
-    // reset data state properties. Causes bug if not reset when
-    // a user clicks on the shorten url button.
-    setData({ originalUrl: "", shortUrl: null });
-  }
-  console.log("error", isError);
+  useEffect(() => {
+    if (data.originalUrl) {
+      store.addUrl(data.originalUrl, data.shortUrl);
+      setData({ originalUrl: "", shorturl: "" });
+    }
+  }, [data.originalUrl]);
 
   return (
     <Layout

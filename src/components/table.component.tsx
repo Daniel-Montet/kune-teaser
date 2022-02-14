@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { AppProps } from "../lib/props.types";
+import Store from "../lib/store";
+
+// const store = new Store();
 
 const Table: React.FunctionComponent<AppProps> = ({
   store,
@@ -99,9 +102,11 @@ const DoCopy: React.FunctionComponent<AppProps> = ({
   return (
     <div onClick={() => handleCopy()}>
       {isCopied ? (
-        <span className="text-sm text-sky-500 animate-pulse">Copied</span>
+        <span className="text-sm text-sky-500 animate-pulse cursor-pointer">
+          Copied
+        </span>
       ) : (
-        <span className="text-sm">Copy</span>
+        <span className="text-sm cursor-pointer">Copy</span>
       )}
     </div>
   );
